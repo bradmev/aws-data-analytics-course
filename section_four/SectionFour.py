@@ -10,8 +10,10 @@ class SectionFourOptions:
     def __init__(
         self,
         table_arn: str,
+        firehose_arn: str,
     ) -> None:
         self.table_arn = table_arn
+        self.firehose_arn = firehose_arn
 
 
 class SectionFour(Resource):
@@ -38,11 +40,14 @@ class SectionFour(Resource):
                 "arn:aws:iam::aws:policy/AmazonKinesisReadOnlyAccess",
                 "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess",
             ],
-            event_mapping_arn=self.section_options.table_arn,
+            event_mapping_arn=self.section_options.firehose_arn,
         )
 
         custom_lambda = CustomLambda(
-            self, "lambda", self.options, lambda_options=lambda_opts
+            self,
+            "lambda",
+            self.options,
+            lambda_options=lambda_opts,
         )
 
         TerraformOutput(self, "lambda_id", value=custom_lambda.lambda_function.arn)

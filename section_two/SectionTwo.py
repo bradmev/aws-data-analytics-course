@@ -37,13 +37,13 @@ class SectionTwo(Resource):
             one_nat_gateway_per_az=True,
         )
 
-        custom_vpc = CustomVpc(self, "vpc", options=options, vpc_opts=vpc_opts)
+        self.custom_vpc = CustomVpc(self, "vpc", options=options, vpc_opts=vpc_opts)
 
         firehose_opts = FirehoseOptions(
             name="PurchaseLogs",
         )
 
-        custom_firehose = CustomFirehose(
+        self.custom_firehose = CustomFirehose(
             self, "firehose", self.options, firehose_options=firehose_opts
         )
 
@@ -86,7 +86,7 @@ sudo mv Consumer.pyh /opt/course_content
         instance_sec_group = SecurityGroup(
             self,
             "security-group",
-            vpc_id=custom_vpc.vpc.vpc_id_output,
+            vpc_id=self.custom_vpc.vpc.vpc_id_output,
         )
         SecurityGroupRule(
             self,
@@ -120,7 +120,7 @@ sudo mv Consumer.pyh /opt/course_content
             cidr_blocks=["0.0.0.0/0"],
         )
 
-        subnets_token_list = Token().as_list(custom_vpc.vpc.public_subnets_output)
+        subnets_token_list = Token().as_list(self.custom_vpc.vpc.public_subnets_output)
         subnet = Fn.element(subnets_token_list, 0)
 
         instance_opts = InstnaceOptions(
@@ -135,6 +135,6 @@ sudo mv Consumer.pyh /opt/course_content
             security_groups=[instance_sec_group.id],
         )
 
-        purchase_logs_instance = CustomInstance(
+        self.custom_instance = CustomInstance(
             self, "instance", options=options, instance_options=instance_opts
         )

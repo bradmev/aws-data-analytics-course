@@ -81,7 +81,11 @@ class CustomLambda(Resource):
         )
 
         # create bucket
-        bucket = S3Bucket(self, "bucket", bucket_prefix=f"{options.env}_lambdas")
+        bucket = S3Bucket(
+            self,
+            "bucket" + uuid(),
+            bucket_prefix=f"lambda-{self.lambda_options.name.lower()}",
+        )
 
         # upload asset to bucket
         lambda_archive = S3Object(
@@ -96,7 +100,7 @@ class CustomLambda(Resource):
         lambda_role = IamRole(
             self,
             "lambda-role-" + uuid(),
-            name=f"{self.lambda_options.name}-role",
+            name=f"{self.lambda_options.name.lower()}-lambda-role",
             assume_role_policy=json.dumps(self.default_lambda_role_policy, indent=4),
         )
 

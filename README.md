@@ -14,6 +14,11 @@ Each section contains a cdktf terraform stack to replicate exercises from within
 ## Prerequisites
 
 - AWS Credentials to programmaticly connect to your aws account
+
+- Install Terraform CDKTF 
+```bash
+npm install --global cdktf-cli@latest
+```
 - Create a .env file within the root of this repo with the following values
 ```txt
 ENV=< string identifier for an environment e.g. dev >
@@ -21,12 +26,11 @@ REGION=< your aws region >
 ACCOUNT_ID=< your aws account id >
 KEY_PAIR_NAME=< your aws key pair name >
 ```
-- install Terraform CDKTF
-
+[https://developer.hashicorp.com/terraform/tutorials/cdktf/cdktf-install](https://developer.hashicorp.com/terraform/tutorials/cdktf/cdktf-install)
 ## Usage
 
 
-To deploy a section stack
+To deploy 
 
 ```
 cdktf deploy

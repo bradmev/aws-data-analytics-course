@@ -23,18 +23,19 @@ class MyCourseStack(TerraformStack):
 
         AwsProvider(self, "aws-provider", region=self.environment_opts.region)
 
-        SectionTwo(self, "section-one", options=self.environment_opts)
+        section_two = SectionTwo(self, "section-one", options=self.environment_opts)
 
         section_three = SectionThree(self, "section-two", options=self.environment_opts)
 
-        section_four = SectionFour(
-            self,
-            "section-four",
-            options=self.environment_opts,
-            section_options=SectionFourOptions(
-                table_arn=section_three.dynamodb_table.table.arn,
-            ),
-        )
+        # section_four = SectionFour(
+        #     self,
+        #     "section-four",
+        #     options=self.environment_opts,
+        #     section_options=SectionFourOptions(
+        #         table_arn=section_three.dynamodb_table.table.arn,
+        #         firehose_arn=section_two.custom_firehose.firehose.arn,
+        #     ),
+        # )
 
 
 app = App()
